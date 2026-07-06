@@ -1,0 +1,2496 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>جاسوس کیه؟</title>
+  <link rel="icon" type="image/png"
+    href="https://plain-apac-prod-public.komododecks.com/202606/23/mm1va9RGaMzIAVblRC0r/image.png">
+  <audio id="bgMusic" loop preload="auto">
+    <source src="https://cdn.pixabay.com/audio/2022/08/04/audio_2dde668d05.mp3" type="audio/mpeg">
+  </audio>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
+
+    :root {
+      --bg: #07070f;
+      --bg2: rgba(255, 255, 255, .04);
+      --bg3: rgba(255, 255, 255, .07);
+      --bg4: rgba(255, 255, 255, .11);
+      --line: rgba(255, 255, 255, .08);
+      --line2: rgba(255, 255, 255, .16);
+      --txt: #f0f0f8;
+      --txt2: #9090b0;
+      --txt3: #505068;
+      --accent: #6c63ff;
+      --accent2: #a78bfa;
+      --spy: #ff4757;
+      --word: #00d2a0;
+      --gold: #f0b429;
+      --r: 16px;
+      --r2: 12px;
+      --tr: all .2s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    [data-theme="light"] {
+      --bg: #f0f0f8;
+      --bg2: rgba(0, 0, 0, .04);
+      --bg3: rgba(0, 0, 0, .07);
+      --bg4: rgba(0, 0, 0, .11);
+      --line: rgba(0, 0, 0, .08);
+      --line2: rgba(0, 0, 0, .16);
+      --txt: #111120;
+      --txt2: #505068;
+      --txt3: #a0a0c0;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      color: var(--txt);
+      min-height: 100vh;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #07070f 0%, #0d0820 25%, #110d2e 50%, #0a0a1a 75%, #07070f 100%);
+      background-attachment: fixed;
+    }
+
+    [data-theme="light"] body {
+      background: linear-gradient(135deg, #1a1040 0%, #2a1060 30%, #1a1850 60%, #1a1040 100%);
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 50% at 20% 0%, rgba(108, 99, 255, .12) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 85% 100%, rgba(255, 71, 87, .07) 0%, transparent 60%);
+    }
+
+    #app {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+    }
+
+    .screen {
+      display: none;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 18px 110px;
+      flex: 1;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px 0;
+      max-width: 480px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ── LOGO ── */
+    .logo-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 22px 0 16px;
+      text-align: center;
+    }
+
+    .logo-emblem {
+      width: 76px;
+      height: 76px;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-emblem img {
+      width: 76px;
+      height: 76px;
+      object-fit: contain;
+      border-radius: 20px;
+    }
+
+    .logo-title {
+      font-size: 1.7rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, #fff 0%, var(--accent2) 60%, var(--txt2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 3px;
+    }
+
+    .logo-sub {
+      font-size: .74rem;
+      color: var(--txt3);
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 12px 18px;
+      border-radius: var(--r2);
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: .87rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: var(--tr);
+      -webkit-tap-highlight-color: transparent;
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .btn-glass {
+      background: rgba(108, 99, 255, .18);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(108, 99, 255, .45);
+      color: #fff;
+      box-shadow: 0 4px 22px rgba(108, 99, 255, .2), inset 0 1px 0 rgba(255, 255, 255, .13);
+    }
+
+    .btn-glass::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .09), transparent);
+      border-radius: var(--r2) var(--r2) 0 0;
+      pointer-events: none;
+    }
+
+    .btn-glass:hover {
+      background: rgba(108, 99, 255, .28);
+      box-shadow: 0 6px 28px rgba(108, 99, 255, .34);
+    }
+
+    .btn-glass:active {
+      transform: scale(.98);
+    }
+
+    .btn-glass-spy {
+      background: rgba(255, 71, 87, .18);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 71, 87, .4);
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(255, 71, 87, .18), inset 0 1px 0 rgba(255, 255, 255, .1);
+    }
+
+    .btn-glass-spy::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .07), transparent);
+      border-radius: var(--r2) var(--r2) 0 0;
+      pointer-events: none;
+    }
+
+    .btn-glass-spy:hover {
+      background: rgba(255, 71, 87, .28);
+    }
+
+    .btn-glass-spy:active {
+      transform: scale(.98);
+    }
+
+    .btn-glass-gold {
+      background: rgba(240, 180, 41, .13);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(240, 180, 41, .38);
+      color: var(--gold);
+      box-shadow: 0 4px 16px rgba(240, 180, 41, .12);
+    }
+
+    .btn-glass-gold:hover {
+      background: rgba(240, 180, 41, .22);
+    }
+
+    .btn-ghost-glass {
+      background: var(--bg2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--line2);
+      color: var(--txt2);
+    }
+
+    .btn-ghost-glass:hover {
+      background: var(--bg3);
+      color: var(--txt);
+    }
+
+    .btn-ghost-glass:active,
+    .btn-glass-gold:active,
+    .btn-glass-spy:active {
+      transform: scale(.98);
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    .btn-sm {
+      padding: 7px 12px;
+      font-size: .77rem;
+      border-radius: 9px;
+    }
+
+    .btn-xs {
+      padding: 4px 9px;
+      font-size: .69rem;
+      border-radius: 6px;
+    }
+
+    .btn-icon {
+      width: 37px;
+      height: 37px;
+      padding: 0;
+      border-radius: 10px;
+    }
+
+    /* ── INPUTS ── */
+    .input-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 13px;
+    }
+
+    .field {
+      flex: 1;
+      background: var(--bg2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid var(--line);
+      border-radius: var(--r2);
+      padding: 11px 13px;
+      color: var(--txt);
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: .91rem;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .field:focus {
+      border-color: rgba(108, 99, 255, .5);
+    }
+
+    .field::placeholder {
+      color: var(--txt3);
+    }
+
+    /* ── CHIPS ── */
+    .players-area {
+      background: var(--bg2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid var(--line);
+      border-radius: var(--r);
+      padding: 11px;
+      min-height: 62px;
+      margin-bottom: 11px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-content: flex-start;
+    }
+
+    .p-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(108, 99, 255, .14);
+      border: 1px solid rgba(108, 99, 255, .28);
+      border-radius: 30px;
+      padding: 4px 10px;
+      font-size: .77rem;
+      font-weight: 600;
+    }
+
+    .p-chip .chip-del {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: .58rem;
+      color: var(--txt3);
+      transition: var(--tr);
+    }
+
+    .p-chip .chip-del:hover {
+      background: var(--spy);
+      color: #fff;
+    }
+
+    .p-empty {
+      width: 100%;
+      text-align: center;
+      color: var(--txt3);
+      font-size: .78rem;
+      padding: 8px 0;
+    }
+
+    .p-count {
+      font-size: .71rem;
+      color: var(--txt3);
+      margin-bottom: 11px;
+      text-align: center;
+    }
+
+    /* ── MY LIST ── */
+    .mylist-section {
+      background: var(--bg2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid var(--line);
+      border-radius: var(--r);
+      overflow: hidden;
+      margin-bottom: 13px;
+    }
+
+    .mylist-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      cursor: pointer;
+    }
+
+    .mylist-header-label {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--txt2);
+    }
+
+    .mylist-arrow {
+      font-size: .68rem;
+      color: var(--txt3);
+      transition: transform .2s;
+    }
+
+    .mylist-arrow.open {
+      transform: rotate(180deg);
+    }
+
+    .mylist-body {
+      display: none;
+      border-top: 1px solid var(--line);
+    }
+
+    .mylist-body.open {
+      display: block;
+    }
+
+    .mylist-add-row {
+      display: flex;
+      gap: 7px;
+      padding: 9px 11px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .saved-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 13px;
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+      transition: background .15s;
+    }
+
+    .saved-row:last-child {
+      border-bottom: none;
+    }
+
+    .saved-row:hover {
+      background: var(--bg3);
+    }
+
+    .saved-row.sel {
+      background: rgba(108, 99, 255, .08);
+    }
+
+    .s-check {
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      border: 1.5px solid var(--line2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .62rem;
+      color: transparent;
+      flex-shrink: 0;
+      transition: var(--tr);
+    }
+
+    .saved-row.sel .s-check {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .saved-row-name {
+      flex: 1;
+      font-size: .82rem;
+      font-weight: 500;
+    }
+
+    .saved-del {
+      font-size: .66rem;
+      padding: 3px 7px;
+      background: transparent;
+      border: 1px solid rgba(255, 71, 87, .22);
+      color: var(--spy);
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Vazirmatn', sans-serif;
+      transition: var(--tr);
+    }
+
+    .saved-del:hover {
+      background: rgba(255, 71, 87, .1);
+    }
+
+    .mylist-actions {
+      display: flex;
+      gap: 6px;
+      padding: 8px 11px;
+      border-top: 1px solid var(--line);
+    }
+
+    /* ── SCREEN HEADER ── */
+    .screen-header {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 13px 18px 11px;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      background: rgba(7, 7, 15, .82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 20;
+    }
+
+    [data-theme="light"] .screen-header {
+      background: rgba(240, 240, 248, .88);
+    }
+
+    .screen-header-back {
+      width: 33px;
+      height: 33px;
+      background: var(--bg3);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: .88rem;
+      color: var(--txt2);
+      transition: var(--tr);
+      flex-shrink: 0;
+    }
+
+    .screen-header-back:hover {
+      background: var(--bg4);
+      color: var(--txt);
+    }
+
+    .screen-header-title {
+      font-size: .97rem;
+      font-weight: 800;
+      flex: 1;
+    }
+
+    .screen-header-sub {
+      font-size: .68rem;
+      color: var(--txt3);
+    }
+
+    /* ── CATEGORY GRID (multi-select) ── */
+    .cat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin-bottom: 12px;
+    }
+
+    .cat-card {
+      background: var(--bg2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid var(--line);
+      border-radius: var(--r);
+      padding: 14px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--tr);
+      position: relative;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .cat-card:hover {
+      border-color: var(--line2);
+    }
+
+    /* انتخاب شده */
+    .cat-card.sel {
+      border-color: rgba(108, 99, 255, .55);
+      background: rgba(108, 99, 255, .14);
+    }
+
+    .cat-card .cat-check {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      border: 1.5px solid var(--line2);
+      background: var(--bg4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .6rem;
+      color: transparent;
+      transition: var(--tr);
+    }
+
+    .cat-card.sel .cat-check {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .cat-icon {
+      font-size: 1.8rem;
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    .cat-name {
+      font-size: .8rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .cat-count {
+      font-size: .64rem;
+      color: var(--txt3);
+    }
+
+    .cat-selected-bar {
+      background: rgba(108, 99, 255, .1);
+      border: 1px solid rgba(108, 99, 255, .25);
+      border-radius: var(--r2);
+      padding: 9px 13px;
+      margin-bottom: 12px;
+      font-size: .78rem;
+      color: var(--accent2);
+      text-align: center;
+    }
+
+    /* ── GAME LIST ── */
+    .player-list-reveal {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 13px 18px;
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 80px;
+    }
+
+    .pli {
+      background: var(--bg2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid var(--line);
+      border-radius: var(--r);
+      overflow: hidden;
+      transition: var(--tr);
+    }
+
+    .pli-main {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 12px 13px;
+    }
+
+    .pli-num {
+      width: 27px;
+      height: 27px;
+      border-radius: 50%;
+      background: var(--bg4);
+      border: 1px solid var(--line2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .7rem;
+      font-weight: 900;
+      color: var(--txt2);
+      flex-shrink: 0;
+    }
+
+    .pli.done .pli-num {
+      background: rgba(108, 99, 255, .18);
+      border-color: rgba(108, 99, 255, .38);
+      color: var(--accent2);
+    }
+
+    .pli-name {
+      flex: 1;
+      font-size: .89rem;
+      font-weight: 700;
+    }
+
+    .pli-status {
+      font-size: .66rem;
+      color: var(--txt3);
+      flex-shrink: 0;
+    }
+
+    .pli.done .pli-status {
+      color: var(--accent2);
+    }
+
+    .pli-reveal-btn {
+      background: rgba(108, 99, 255, .18);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(108, 99, 255, .38);
+      color: #fff;
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: .74rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: var(--tr);
+    }
+
+    .pli-reveal-btn:hover {
+      background: rgba(108, 99, 255, .32);
+    }
+
+    .pli-reveal-btn:disabled {
+      opacity: .28;
+      cursor: not-allowed;
+    }
+
+    #godBtnWrap {
+      display: none;
+      padding: 0 18px 8px;
+    }
+
+    /* ── BOTTOM ── */
+    .bottom-fixed {
+      position: sticky;
+      bottom: 0;
+      background: linear-gradient(0deg, var(--bg) 72%, transparent);
+      padding: 11px 18px calc(11px + env(safe-area-inset-bottom));
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      z-index: 30;
+      max-width: 480px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ── SETTINGS ── */
+    .settings-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 18px 100px;
+    }
+
+    .stg-section {
+      margin-bottom: 20px;
+    }
+
+    .stg-section-title {
+      font-size: .65rem;
+      font-weight: 700;
+      color: var(--txt3);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 13px 0 8px;
+    }
+
+    .stg-row {
+      background: var(--bg2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid var(--line);
+      border-radius: var(--r2);
+      padding: 11px 12px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 6px;
+      gap: 10px;
+    }
+
+    .stg-info {
+      flex: 1;
+    }
+
+    .stg-label {
+      font-size: .81rem;
+      font-weight: 600;
+    }
+
+    .stg-sub {
+      font-size: .67rem;
+      color: var(--txt3);
+      margin-top: 2px;
+    }
+
+    .sw-toggle {
+      width: 40px;
+      height: 22px;
+      background: var(--bg4);
+      border-radius: 11px;
+      border: 1px solid var(--line2);
+      cursor: pointer;
+      position: relative;
+      transition: var(--tr);
+      flex-shrink: 0;
+    }
+
+    .sw-toggle::after {
+      content: '';
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--txt3);
+      position: absolute;
+      top: 2px;
+      right: 3px;
+      transition: var(--tr);
+    }
+
+    .sw-toggle.on {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .sw-toggle.on::after {
+      right: calc(100% - 19px);
+      background: #fff;
+    }
+
+    .num-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .n-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      background: var(--bg4);
+      border: 1px solid var(--line2);
+      color: var(--txt2);
+      font-size: .86rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--tr);
+    }
+
+    .n-btn:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .n-val {
+      font-size: .91rem;
+      font-weight: 700;
+      min-width: 23px;
+      text-align: center;
+      color: var(--accent2);
+    }
+
+    .words-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 7px;
+      min-height: 32px;
+    }
+
+    .custom-word-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(108, 99, 255, .13);
+      border: 1px solid rgba(108, 99, 255, .28);
+      border-radius: 20px;
+      padding: 3px 9px;
+      font-size: .73rem;
+      font-weight: 600;
+    }
+
+    .del-word {
+      cursor: pointer;
+      font-size: .58rem;
+      color: var(--txt3);
+    }
+
+    .del-word:hover {
+      color: var(--spy);
+    }
+
+    /* ── MENU ── */
+    #menuOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(0, 0, 0, .52);
+      display: none;
+    }
+
+    #menuOverlay.vis {
+      display: block;
+    }
+
+    #menuDrawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: min(265px, 78vw);
+      background: rgba(12, 8, 28, .95);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border-right: 1px solid rgba(108, 99, 255, .18);
+      z-index: 501;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(-100%);
+      transition: transform .3s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    [data-theme="light"] #menuDrawer {
+      background: rgba(240, 238, 255, .96);
+    }
+
+    #menuDrawer.vis {
+      transform: translateX(0);
+    }
+
+    .menu-header {
+      padding: 20px 17px 13px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .menu-logo-mini {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu-logo-mini img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      border-radius: 9px;
+    }
+
+    .menu-title {
+      font-size: .92rem;
+      font-weight: 900;
+    }
+
+    .menu-sub {
+      font-size: .67rem;
+      color: var(--txt3);
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 13px 17px;
+      cursor: pointer;
+      transition: background .15s;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .menu-item:hover {
+      background: var(--bg3);
+    }
+
+    .menu-item-icon {
+      font-size: 1rem;
+      width: 25px;
+      text-align: center;
+    }
+
+    .menu-item-label {
+      font-size: .84rem;
+      font-weight: 600;
+    }
+
+    .menu-item-sub {
+      font-size: .66rem;
+      color: var(--txt3);
+      margin-top: 1px;
+    }
+
+    /* ── WORD CARD OVERLAY ── */
+    #wordOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(4, 4, 12, .96);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+    }
+
+    #wordOverlay.vis {
+      display: flex;
+    }
+
+    .word-card {
+      width: min(285px, 84vw);
+      background: rgba(18, 12, 38, .92);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1.5px solid rgba(108, 99, 255, .28);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 22px 60px rgba(0, 0, 0, .8), 0 0 0 1px rgba(255, 255, 255, .04);
+      animation: cardIn .36s cubic-bezier(.22, .68, 0, 1.2) forwards;
+      position: relative;
+      user-select: none;
+      cursor: pointer;
+      touch-action: none;
+    }
+
+    [data-theme="light"] .word-card {
+      background: rgba(248, 246, 255, .93);
+    }
+
+    .word-card-shine {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 38%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .055), transparent);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes cardIn {
+      from {
+        transform: scale(.82) translateY(22px);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .word-card-top {
+      padding: 30px 22px 26px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .wc-player {
+      font-size: .7rem;
+      letter-spacing: 1.5px;
+      color: var(--txt3);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .wc-reveal-prompt {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    .wc-hold-hint {
+      font-size: .78rem;
+      color: var(--txt2);
+      line-height: 1.5;
+      background: rgba(108, 99, 255, .09);
+      border: 1px solid rgba(108, 99, 255, .18);
+      border-radius: 9px;
+      padding: 7px 13px;
+    }
+
+    .word-card-word {
+      padding: 26px 22px 18px;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .word-card-word.shown {
+      display: flex;
+    }
+
+    .wc-role-badge {
+      font-size: .7rem;
+      font-weight: 700;
+      padding: 3px 11px;
+      border-radius: 20px;
+      margin-bottom: 13px;
+    }
+
+    .wc-role-spy {
+      background: rgba(255, 71, 87, .18);
+      color: var(--spy);
+      border: 1px solid rgba(255, 71, 87, .38);
+    }
+
+    .wc-role-word {
+      background: rgba(0, 210, 160, .13);
+      color: var(--word);
+      border: 1px solid rgba(0, 210, 160, .32);
+    }
+
+    .wc-word-text {
+      font-size: 2.1rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 9px;
+      line-height: 1.2;
+    }
+
+    .wc-word-spy {
+      color: var(--spy);
+    }
+
+    .wc-word-normal {
+      background: linear-gradient(135deg, #fff 0%, var(--word) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .wc-desc {
+      font-size: .72rem;
+      color: var(--txt2);
+      line-height: 1.6;
+    }
+
+    .wc-countdown {
+      font-size: .66rem;
+      color: var(--txt3);
+      text-align: center;
+      padding: 7px 0 3px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .wc-timer-wrap {
+      height: 3px;
+      background: rgba(255, 255, 255, .05);
+      margin: 0 15px 14px;
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+    }
+
+    .wc-timer-bar {
+      height: 100%;
+      width: 100%;
+      border-radius: 2px;
+      transition: width .1s linear;
+    }
+
+    .wo-hint {
+      margin-top: 18px;
+      font-size: .68rem;
+      color: var(--txt3);
+    }
+
+    /* ── GOD OVERLAY ── */
+    #godOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 250;
+      background: rgba(4, 4, 12, .97);
+      display: none;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 17px;
+    }
+
+    #godOverlay.vis {
+      display: block;
+    }
+
+    .god-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 13px;
+      padding-top: 3px;
+    }
+
+    .god-title {
+      font-size: .97rem;
+      font-weight: 900;
+    }
+
+    .god-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .god-cell {
+      background: var(--bg2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid var(--line);
+      border-radius: var(--r2);
+      padding: 10px;
+      text-align: center;
+    }
+
+    .god-cell-emoji {
+      font-size: 1.35rem;
+      margin-bottom: 3px;
+    }
+
+    .god-cell-player {
+      font-size: .63rem;
+      color: var(--txt3);
+      margin-bottom: 2px;
+    }
+
+    .god-cell-role {
+      font-size: .8rem;
+      font-weight: 800;
+    }
+
+    .god-cell-word {
+      font-size: .66rem;
+      color: var(--txt2);
+      margin-top: 2px;
+    }
+
+    /* ── POPUPS ── */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(0, 0, 0, .78);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .popup-overlay.vis {
+      display: flex;
+    }
+
+    .popup-box {
+      width: min(315px, 89vw);
+      background: rgba(12, 8, 28, .96);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1.5px solid rgba(108, 99, 255, .22);
+      border-radius: 18px;
+      padding: 24px 19px;
+      text-align: center;
+      animation: cardIn .34s cubic-bezier(.22, .68, 0, 1.2) forwards;
+    }
+
+    [data-theme="light"] .popup-box {
+      background: rgba(248, 246, 255, .97);
+    }
+
+    .popup-icon {
+      font-size: 2.5rem;
+      margin-bottom: 9px;
+    }
+
+    .popup-title {
+      font-size: 1.1rem;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .popup-sub {
+      font-size: .78rem;
+      color: var(--txt2);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      white-space: pre-line;
+    }
+
+    .popup-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    #confirmModal {
+      position: fixed;
+      inset: 0;
+      z-index: 400;
+      background: rgba(0, 0, 0, .76);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    #confirmModal.vis {
+      display: flex;
+    }
+
+    .confirm-box {
+      width: min(275px, 84vw);
+      background: rgba(12, 8, 28, .96);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1.5px solid rgba(108, 99, 255, .18);
+      border-radius: 15px;
+      padding: 20px 17px;
+      text-align: center;
+      animation: cardIn .3s cubic-bezier(.22, .68, 0, 1.2) forwards;
+    }
+
+    [data-theme="light"] .confirm-box {
+      background: rgba(248, 246, 255, .97);
+    }
+
+    .confirm-title {
+      font-size: .94rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .confirm-sub {
+      font-size: .76rem;
+      color: var(--txt2);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .confirm-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed;
+      bottom: 84px;
+      left: 50%;
+      transform: translateX(-50%) translateY(13px);
+      background: rgba(18, 12, 38, .96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(108, 99, 255, .28);
+      padding: 7px 15px;
+      border-radius: var(--r2);
+      font-size: .78rem;
+      font-weight: 600;
+      z-index: 600;
+      opacity: 0;
+      transition: all .24s;
+      white-space: nowrap;
+      pointer-events: none;
+      max-width: 86vw;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    ::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(108, 99, 255, .28);
+      border-radius: 2px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+
+    <!-- ══ MENU ══ -->
+    <div id="menuOverlay" onclick="closeMenu()"></div>
+    <div id="menuDrawer">
+      <div class="menu-header">
+        <div class="menu-logo-mini"><img src="https://plain-apac-prod-public.komododecks.com/202606/23/mm1va9RGaMzIAVblRC0r/image.png" alt="logo"
+            onerror="this.parentElement.textContent='🕵️'"></div>
+        <div>
+          <div class="menu-title">جاسوس کیه؟</div>
+          <div class="menu-sub">Who is the Spy?</div>
+        </div>
+      </div>
+      <div class="menu-item" onclick="closeMenu();goScreen('s-settings')">
+        <div class="menu-item-icon">⚙️</div>
+        <div>
+          <div class="menu-item-label">تنظیمات</div>
+          <div class="menu-item-sub">صدا، تم، بازی...</div>
+        </div>
+      </div>
+      <div class="menu-item" onclick="closeMenu();goScreen('s-wordpicker')">
+        <div class="menu-item-icon">🗂️</div>
+        <div>
+          <div class="menu-item-label">انتخاب دسته‌بندی</div>
+          <div class="menu-item-sub">چند لیست قابل انتخاب</div>
+        </div>
+      </div>
+      <div class="menu-item" onclick="toggleTheme()">
+        <div class="menu-item-icon" id="themeMenuIcon">☀️</div>
+        <div>
+          <div class="menu-item-label" id="themeMenuLabel">حالت روشن</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ HOME ══ -->
+    <div class="screen active" id="s-home">
+      <div class="topbar">
+        <button class="btn btn-ghost-glass btn-icon" onclick="openMenu()">☰</button>
+        <div style="width:37px;"></div>
+      </div>
+      <div class="wrap">
+        <div class="logo-section">
+          <div class="logo-emblem"><img src="https://plain-apac-prod-public.komododecks.com/202606/23/mm1va9RGaMzIAVblRC0r/image.png" alt="جاسوس کیه؟"
+              onerror="this.parentElement.innerHTML='🕵️'"></div>
+          <div class="logo-title">جاسوس کیه؟</div>
+          <div class="logo-sub">Who is the Spy?</div>
+        </div>
+        <div class="input-row">
+          <input class="field" id="pInput" placeholder="نام بازیکن..." type="text"
+            onkeydown="if(event.key==='Enter')addPlayer()">
+          <button class="btn btn-glass btn-icon" onclick="addPlayer()">+</button>
+        </div>
+        <div class="players-area" id="playerChips"><span class="p-empty">هنوز کسی اضافه نشده 👥</span></div>
+        <div class="p-count" id="pCount"></div>
+        <div class="mylist-section">
+          <div class="mylist-header" onclick="toggleMyList()">
+            <span class="mylist-header-label">📋 لیست من</span>
+            <span class="mylist-arrow" id="mylistArrow">▼</span>
+          </div>
+          <div class="mylist-body" id="mylistBody">
+            <div class="mylist-add-row">
+              <input class="field" id="savedInput" placeholder="نام برای ذخیره..." type="text"
+                style="font-size:.8rem;padding:8px 11px;" onkeydown="if(event.key==='Enter')savePerson()">
+              <button class="btn btn-ghost-glass btn-sm" onclick="savePerson()">💾</button>
+            </div>
+            <div id="savedList"></div>
+            <div class="mylist-actions">
+              <button class="btn btn-ghost-glass btn-sm btn-full" onclick="selectAllSaved()">✅ همه</button>
+              <button class="btn btn-ghost-glass btn-sm btn-full" onclick="deselectAllSaved()">☐ هیچ</button>
+              <button class="btn btn-ghost-glass btn-sm btn-full" onclick="addFromSaved()">➕ اضافه</button>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:9px;margin-top:13px;padding-bottom:28px;">
+          <button class="btn btn-ghost-glass btn-full" onclick="goScreen('s-wordpicker')">🗂️ دسته‌بندی</button>
+          <button class="btn btn-glass btn-full" onclick="startGame()">✦ شروع بازی</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ WORD PICKER ══ -->
+    <div class="screen" id="s-wordpicker">
+      <div class="screen-header">
+        <div class="screen-header-back" onclick="goScreen('s-home')">←</div>
+        <div>
+          <div class="screen-header-title">🗂️ انتخاب دسته‌بندی</div>
+          <div class="screen-header-sub">می‌توانی چند لیست را با هم انتخاب کنی</div>
+        </div>
+      </div>
+      <div class="wrap" style="padding-top:14px;">
+        <div class="cat-selected-bar" id="catSelectedBar">هیچ لیستی انتخاب نشده</div>
+        <div class="cat-grid" id="catGrid"></div>
+      </div>
+      <div class="bottom-fixed">
+        <button class="btn btn-glass btn-full" onclick="goScreen('s-home')">✓ تأیید و بازگشت</button>
+      </div>
+    </div>
+
+    <!-- ══ GAME ══ -->
+    <div class="screen" id="s-game">
+      <div class="screen-header">
+        <div class="screen-header-back" onclick="confirmRestart()">←</div>
+        <div>
+          <div class="screen-header-title">🕵️ انتخاب بازیکن</div>
+          <div class="screen-header-sub">نگه دار تا کلمه‌ات رو ببینی</div>
+        </div>
+        <button class="btn btn-ghost-glass btn-sm" onclick="goScreen('s-settings')">⚙️</button>
+      </div>
+      <div class="player-list-reveal" id="gameList"></div>
+      <div id="godBtnWrap" style="padding:0 18px 8px;">
+        <button class="btn btn-glass-gold btn-full" onclick="showGodView()">👁 نمایش همه کلمه‌ها</button>
+      </div>
+      <div class="bottom-fixed">
+        <button class="btn btn-glass btn-full" onclick="restartSameGame()">🔄 جاسوس جدید + کلمه جدید</button>
+      </div>
+    </div>
+
+    <!-- ══ SETTINGS ══ -->
+    <div class="screen" id="s-settings">
+      <div class="screen-header">
+        <div class="screen-header-back" onclick="goBack()">←</div>
+        <div class="screen-header-title">⚙️ تنظیمات</div>
+      </div>
+      <div class="settings-body">
+        <div class="stg-section">
+          <div class="stg-section-title">ظاهر</div>
+          <div class="stg-row">
+            <div class="stg-info">
+              <div class="stg-label">حالت تاریک / روشن</div>
+              <div class="stg-sub" id="themeSubLabel">در حال حاضر: تاریک</div>
+            </div>
+            <div class="sw-toggle" id="sw-theme" onclick="toggleTheme()"></div>
+          </div>
+        </div>
+        <div class="stg-section">
+          <div class="stg-section-title">صدا</div>
+          <div class="stg-row">
+            <div class="stg-info">
+              <div class="stg-label">صداهای بازی</div>
+            </div>
+            <div class="sw-toggle on" id="sw-sound" onclick="toggleSw('sw-sound','sound')"></div>
+          </div>
+          <div class="stg-row">
+            <div class="stg-info">
+              <div class="stg-label">موزیک پس‌زمینه</div>
+            </div>
+            <div class="sw-toggle" id="sw-bgmusic" onclick="toggleBgMusic()"></div>
+          </div>
+        </div>
+        <div class="stg-section">
+          <div class="stg-section-title">بازی</div>
+          <div class="stg-row">
+            <div class="stg-info">
+              <div class="stg-label">تعداد جاسوس</div>
+              <div class="stg-sub">چند نفر جاسوس باشند؟</div>
+            </div>
+            <div class="num-row">
+              <div class="n-btn" onclick="changeN('spyCount',-1)">−</div>
+              <div class="n-val" id="nv-spyCount">1</div>
+              <div class="n-btn" onclick="changeN('spyCount',1)">+</div>
+            </div>
+          </div>
+          <div class="stg-row">
+            <div class="stg-info">
+              <div class="stg-label">زمان نمایش کلمه (ثانیه)</div>
+            </div>
+            <div class="num-row">
+              <div class="n-btn" onclick="changeN('revealTime',-1)">−</div>
+              <div class="n-val" id="nv-revealTime">10</div>
+              <div class="n-btn" onclick="changeN('revealTime',1)">+</div>
+            </div>
+          </div>
+          <div class="stg-row">
+            <div class="stg-info">
+              <div class="stg-label">جاسوس کلمه مبهم ببیند</div>
+              <div class="stg-sub">به جای «جاسوس» یک کلمه غیرمرتبط ببیند</div>
+            </div>
+            <div class="sw-toggle" id="sw-blankspy" onclick="toggleSw('sw-blankspy','blankSpy')"></div>
+          </div>
+          <div class="stg-row">
+            <div class="stg-info">
+              <div class="stg-label">نمایش دسته‌بندی به بازیکنان</div>
+            </div>
+            <div class="sw-toggle on" id="sw-showcategory" onclick="toggleSw('sw-showcategory','showCategory')"></div>
+          </div>
+        </div>
+        <div class="stg-section">
+          <div class="stg-section-title">📝 کلمات سفارشی من</div>
+          <div class="stg-row" style="flex-wrap:wrap;gap:6px;">
+            <input class="field" id="customCatName" placeholder="نام لیست..." type="text"
+              style="font-size:.79rem;padding:8px 11px;margin-bottom:5px;">
+            <div style="display:flex;gap:6px;width:100%;">
+              <input class="field" id="customWordInput" placeholder="کلمه جدید..." type="text"
+                style="font-size:.79rem;padding:8px 11px;" onkeydown="if(event.key==='Enter')addCustomWord()">
+              <button class="btn btn-glass btn-sm" onclick="addCustomWord()" style="flex-shrink:0;">+</button>
+            </div>
+          </div>
+          <div class="words-wrap" id="customWordsDisplay"></div>
+          <div style="display:flex;gap:7px;margin-top:7px;">
+            <button class="btn btn-glass btn-sm btn-full" onclick="saveCustomCategory()">💾 ذخیره لیست</button>
+            <button class="btn btn-ghost-glass btn-sm btn-full" onclick="clearCustomWords()">🗑 پاک</button>
+          </div>
+          <div style="margin-top:13px;" id="savedCatsList"></div>
+        </div>
+      </div>
+      <div class="bottom-fixed">
+        <button class="btn btn-glass btn-full" onclick="saveSettings()">💾 ذخیره تنظیمات</button>
+      </div>
+    </div>
+
+  </div><!-- #app -->
+
+  <!-- ══ WORD CARD OVERLAY ══ -->
+  <div id="wordOverlay">
+    <div class="word-card" id="wordCardEl">
+      <div class="word-card-shine"></div>
+      <div class="word-card-top" id="wcPrompt">
+        <div class="wc-player" id="wcPlayer"></div>
+        <div class="wc-reveal-prompt">🤫</div>
+        <div class="wc-hold-hint">نگه دار تا کلمه‌ات رو ببینی<br><span style="font-size:.68rem;opacity:.65;">ول کردی
+            کلمه پنهان میشه</span></div>
+      </div>
+      <div class="word-card-word" id="wcWord">
+        <div class="wc-role-badge" id="wcRoleBadge"></div>
+        <div class="wc-word-text" id="wcWordText"></div>
+        <div class="wc-desc" id="wcDesc"></div>
+      </div>
+      <div class="wc-countdown" id="wcCountdown"></div>
+      <div class="wc-timer-wrap">
+        <div class="wc-timer-bar" id="wcTimerBar"></div>
+      </div>
+    </div>
+    <div class="wo-hint">نگه دار — ول کن تا پنهان شود</div>
+  </div>
+
+  <!-- ══ GOD OVERLAY ══ -->
+  <div id="godOverlay">
+    <div style="max-width:480px;margin:0 auto;">
+      <div class="god-header">
+        <div class="god-title">👁 همه کلمه‌ها</div>
+        <button class="btn btn-ghost-glass btn-sm" onclick="hideGodView()">✕ بستن</button>
+      </div>
+      <div class="god-grid" id="godGrid"></div>
+    </div>
+  </div>
+
+  <!-- ══ WINNER ══ -->
+  <div class="popup-overlay" id="winnerPopup">
+    <div class="popup-box">
+      <div class="popup-icon" id="winIcon">🏆</div>
+      <div class="popup-title" id="winTitle">برنده!</div>
+      <div class="popup-sub" id="winSub"></div>
+      <div class="popup-btns">
+        <button class="btn btn-ghost-glass btn-full" onclick="closeWinner()">ادامه</button>
+        <button class="btn btn-glass btn-full" onclick="newGame()">🔄 بازی جدید</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CONFIRM ══ -->
+  <div id="confirmModal">
+    <div class="confirm-box">
+      <div class="confirm-title">مطمئنی؟</div>
+      <div class="confirm-sub">بازی در حال انجام است. بازگشت به صفحه اصلی؟</div>
+      <div class="confirm-btns">
+        <button class="btn btn-ghost-glass btn-full" onclick="closeConfirm()">لغو</button>
+        <button class="btn btn-glass-spy btn-full" onclick="doRestart()">بله</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>
+    /* ═══════════════════════════════════════════════════════════════════
+       WORD CATEGORIES
+       ───────────────────────────────────────────────────────────────────
+       برای اضافه کردن کلمه به یک لیست:
+         فقط کلمه را داخل آرایه words مربوطه اضافه کنید.
+    
+       برای ساختن لیست جدید:
+         یک آبجکت جدید به شکل زیر اضافه کنید:
+         {
+           id: 'mylist',          ← شناسه یکتا (بدون فاصله)
+           name: 'نام لیست',      ← نام نمایشی
+           icon: '🎯',            ← ایموجی
+           words: ['کلمه۱','کلمه۲', ...]
+         }
+    ═══════════════════════════════════════════════════════════════════ */
+    const WORD_CATEGORIES = [
+
+      /* ════ غذاها ════ */
+      {
+        id: 'food',
+        name: 'غذاها',
+        icon: '🍽️',
+        words: [
+          'ماکارونی', 'پیتزا', 'قرمه‌سبزی', 'جوجه‌کباب', 'چلوکباب', 'ته‌دیگ', 'آبگوشت', 'مرغ بریان',
+          'باقالی‌پلو', 'لوبیاپلو', 'فسنجان', 'زرشک‌پلو', 'کوکو سبزی', 'دلمه', 'کباب کوبیده',
+          'شیشلیک', 'بریانی', 'کلم‌پلو', 'عدسی', 'رشته‌پلو', 'ماست‌موسیر', 'حلیم', 'آش رشته',
+          'کله‌پاچه', 'ماهی سرخ‌شده', 'کشک بادمجان', 'میرزاقاسمی', 'چلو مرغ', 'شامی', 'کتلت',
+          'خوراک جگر', 'قالیه ماهی', 'خورشت بادمجان', 'دیزی', 'آبگوشت بزباش', 'مرغ شکم‌پر',
+          'لازانیا', 'استیک', 'برگر', 'سیب‌زمینی سرخ‌شده', 'بورانی اسفناج', 'نان پنیر گردو',
+          'خوراک ماهی', 'خورشت کرفس', 'آلبالوپلو', 'ماهیتابه‌ای', 'سوپ جو', 'سوپ مرغ',
+          'سوپ گوجه', 'قورمه سبزی', 'بادمجان کباب', 'نان بربری', 'نان سنگک', 'نان لواش',
+          'آش دوغ', 'آش جو', 'خوراک قارچ', 'مرغ ترش', 'کاچی', 'رنگینک', 'فالوده',
+          'زولبیا بامیه', 'شله زرد', 'حلوا', 'قطاب', 'نان برنجی', 'سمنو', 'آجیل مشت',
+          'ته‌چین مرغ', 'ته‌چین گوشت', 'کوفته برنجی', 'کوفته تبریزی', 'ماهی کباب',
+          'میگو سرخ‌شده', 'جوجه تند', 'سالاد الویه', 'سالاد شیرازی', 'زبان', 'دل و جگر',
+          'کلوچه', 'باقلوا', 'رولت مرغ',
+          'پیتزا','همبرگر','کباب','پلو','قورمه‌سبزی', 'سوخاری','ساندویچ','سالاد','سوپ','ماکارونی','لازانیا','کوکو' ,'آش','دلمه','فلافل','زیتون','پنیر','نان','تخم‌مرغ','املت','سیب‌زمینی' ,'هات داگ','سوشی','تاکو','پاستا','برگر'
+
+        ],
+      },
+
+      /* ════ میوه‌ها ════ */
+      {
+        id: 'fruit',
+        name: 'میوه‌ها',
+        icon: '🍎',
+        words: [
+          'هندوانه', 'خربزه', 'انار', 'انگور', 'هلو', 'شلیل', 'گلابی', 'سیب', 'پرتقال', 'نارنگی',
+          'لیمو', 'موز', 'توت‌فرنگی', 'آلبالو', 'گیلاس', 'زردآلو', 'آلو', 'خرما', 'کیوی', 'انبه',
+          'آناناس', 'پاپایا', 'انجیر', 'توت سفید', 'توت قرمز', 'لیچی', 'تمشک', 'شاه‌توت',
+          'آووکادو', 'نارگیل', 'به', 'عناب', 'سنجد', 'گوجه‌سبز', 'خرمالو', 'یوسفی', 'فندق',
+          'پسته', 'بادام', 'گردو', 'ریواس', 'گواوا', 'نارنج', 'بالنگ', 'گوجه‌فرنگی', 'زیتون',
+          'کنگر', 'ازگیل', 'گیلاس سیاه', 'کرانبری', 'بلوبری', 'تمشک زرد', 'موز سبز',
+          'گلابی آسیایی', 'نارنگی یوسفی', 'سیب قرمز', 'سیب سبز', 'انار شیرین', 'انگور قرمز',
+          'انگور سیاه', 'انگور سبز', 'کیوی زرد', 'خرما مضافتی', 'خرما رطب', 'پرتقال ناول',
+          'نارگیل تازه', 'آناناس کوچک', 'پاپایا رسیده', 'آووکادو رسیده', 'بادام تازه',
+          'گردو تازه', 'پسته خندان', 'فندق بوداده', 'سیب درختی', 'هلوی شهمیرزادی',
+          'زردآلو خشک', 'کشمش', 'آلوبخارا', 'انجیر خشک', 'نخل خرما', 'رامبوتان',
+          'لوگان', 'دوریان', 'ستاره‌ای',
+          'نارنگی','انبه','آناناس','نارگیل','خرما','آووکادو','گلابی','شاه‌توت','تمشک','بلوبری'
+        ],
+      },
+
+      /* ════ ماشین‌ها ════ */
+      {
+        id: 'car',
+        name: 'ماشین‌ها',
+        icon: '🚗',
+        words: [
+          'پراید', 'سمند', 'پژو ۴۰۵', 'پارس', 'دنا', 'تارا', 'کوئیک', 'ساینا', 'آریو', 'شاهین',
+          'پژو ۲۰۶', 'رانا', 'تیبا', 'کاپرا', 'ال‌نود', 'دنا پلاس', 'آریان', 'سورن', 'اریسان',
+          'BMW', 'مرسدس', 'آئودی', 'تویوتا', 'هیوندا', 'کیا', 'ولوو', 'جیپ', 'پورشه', 'فراری',
+          'لامبورگینی', 'رولزرویس', 'ماکسیما', 'پاترول', 'لندکروزر', 'رنگ‌روور', 'نیسان',
+          'هوندا', 'میتسوبیشی', 'سوزوکی', 'فورد', 'شورولت', 'جیلی', 'لیفان', 'چری', 'برلیانس',
+          'هاوال', 'ام‌جی', 'جک', 'بیوک', 'لینکلن', 'کادیلاک', 'مازراتی', 'بنتلی', 'مک‌لارن',
+          'بوگاتی', 'کوروت', 'موستانگ', 'چلنجر', 'داج', 'جیپ رانگلر', 'تسلا مدل ۳',
+          'تسلا مدل S', 'تسلا سایبرتراک', 'بی‌وای‌دی', 'ریو', 'سراتو', 'توسان',
+          'سانتافه', 'اسپورتیج', 'کادنزا', 'گرندور', 'سوناتا', 'النترا', 'ای ۳۵',
+          'X5', 'X6', 'GLE', 'GLC', 'C200', 'E250', 'A4', 'A6', 'Q7',
+          'کمری', 'کرولا', 'راو فور', 'پریوس', 'یاریس', 'لندکروزر پرادو',
+          'ماشین','موتور','توبوس','قطار','هواپیما','کشتی','دوچرخه','هلیکوپتر','مترو'
+        ],
+      },
+
+      /* ════ مشاغل ════ */
+      {
+        id: 'jobs',
+        name: 'مشاغل',
+        icon: '👷',
+        words: [
+          'دکتر', 'مهندس', 'معلم', 'نقاش', 'آشپز', 'راننده', 'خلبان', 'پرستار', 'وکیل', 'قاضی',
+          'معمار', 'حسابدار', 'برنامه‌نویس', 'طراح', 'فیلم‌ساز', 'خبرنگار', 'عکاس', 'مکانیک',
+          'آتش‌نشان', 'پلیس', 'ارتشی', 'کشاورز', 'ماهیگیر', 'قصاب', 'نانوا', 'باغبان',
+          'کتابدار', 'داروساز', 'دندانپزشک', 'روانپزشک', 'کارگردان', 'بازیگر', 'خواننده',
+          'نوازنده', 'ورزشکار', 'کشتی‌گیر', 'شناگر', 'فوتبالیست', 'کوهنورد', 'فضانورد',
+          'دیپلمات', 'سیاستمدار', 'اقتصاددان', 'جراح', 'رادیولوژیست', 'دامپزشک', 'ملوان',
+          'مترجم', 'روزنامه‌نگار', 'کارآگاه', 'آهنگر', 'نجار', 'جوشکار', 'برقکار',
+          'لوله‌کش', 'سرامیک‌کار', 'رنگ‌کار', 'سقف‌کار', 'کفاش', 'خیاط', 'آرایشگر',
+          'سلمانی', 'گل‌فروش', 'بقال', 'عطار', 'صرافی', 'نگهبان', 'بادیگارد',
+          'مربی', 'معلم ورزش', 'روحانی', 'آخوند', 'مداح', 'خطاط', 'نگارگر', 'مجسمه‌ساز',
+          'گرافیست', 'عروسک‌ساز', 'جادوگر', 'بازیکن شطرنج', 'ورزشکار اسکی',
+          'معلم موسیقی', 'استاد دانشگاه', 'پژوهشگر', 'دانشمند',
+          'خلبان','آشپز', 'فوتبال بازیکن','خواننده','بازیگر'
+        ],
+      },
+
+      /* ════ اشیاء ════ */
+      {
+        id: 'objects',
+        name: 'اشیاء',
+        icon: '🪑',
+        words: [
+          'میز', 'صندلی', 'تلویزیون', 'یخچال', 'ماشین لباسشویی', 'اجاق گاز', 'مایکروویو',
+          'دوربین', 'کیف', 'کفش', 'عینک', 'ساعت', 'قلم', 'کتاب', 'دفتر', 'لپتاپ', 'موبایل',
+          'هدفون', 'چتر', 'آینه', 'تابلو', 'گلدان', 'فرش', 'پرده', 'بالش', 'پتو', 'ملافه',
+          'قوری', 'فنجان', 'بشقاب', 'چاقو', 'قاشق', 'چنگال', 'قابلمه', 'ماهیتابه', 'جارو',
+          'سطل', 'تخت', 'کمد', 'قیچی', 'سوزن', 'نخ', 'کمربند', 'کلاه', 'دستکش', 'جوراب',
+          'شانه', 'ترازو', 'تلفن ثابت', 'رادیو', 'پنکه', 'کولر', 'بخاری', 'شومینه',
+          'زیرانداز', 'حصیر', 'طناب', 'قفل', 'کلید', 'چراغ قوه', 'شمع', 'آباژور',
+          'چرخ خیاطی', 'ماشین حساب', 'عصا', 'کفش پاشنه‌بلند', 'کوله‌پشتی', 'چمدان',
+          'قفس پرنده', 'آکواریوم', 'تخته‌سیاه', 'تابلو‌وایت‌برد', 'صفحه‌کلید', 'ماوس',
+          'هارد دیسک', 'فلش', 'هدست', 'بلندگو', 'کنترل از راه دور', 'باتری', 'چسب',
+          'گیره', 'منگنه', 'خودکار', 'مداد', 'پاکن', 'تراش', 'خط‌کش', 'نقشه',
+          ,"صندلی","گوشی","لپ‌تاپ","کتاب","خودکار","عینک" ,"ساعت" ,"لامپ" ,"کلید" ,"کیف" ,"کفش" ,"آینه" ,"گلدان" ,"پرده" ,"بالش" ,"پتو" ,"تلویزیون" ,"ماوس" ,"هدفون" ,"چاقو" ,"قاشق" ,"چنگال" ,"لیوان" ,"بطری" ,"کلاه" ,"کمربند" ,"کیف‌ پول"
+        ],
+      },
+
+      /* ════ شهر و کشور ════ */
+      {
+        id: 'cityCountry',
+        name: 'شهر و کشور',
+        icon: '🌍',
+        words: [
+          'تهران', 'اصفهان', 'شیراز', 'مشهد', 'تبریز', 'اهواز', 'رشت', 'قم', 'یزد', 'بندرعباس',
+          'کرمانشاه', 'ارومیه', 'سنندج', 'اردبیل', 'گرگان', 'بجنورد', 'سمنان', 'بیرجند',
+          'کاشان', 'قزوین', 'کرج', 'بوشهر', 'خرم‌آباد', 'دزفول', 'آبادان', 'بروجرد',
+          'نجف‌آباد', 'سبزوار', 'قائم‌شهر', 'آمل', 'بابل', 'لاهیجان', 'جهرم', 'فسا',
+          'ایران', 'عراق', 'ترکیه', 'عربستان', 'امارات', 'قطر', 'کویت', 'مصر', 'لبنان',
+          'سوریه', 'اردن', 'افغانستان', 'پاکستان', 'هندوستان', 'چین', 'ژاپن', 'کره‌جنوبی',
+          'روسیه', 'آمریکا', 'کانادا', 'برزیل', 'آرژانتین', 'فرانسه', 'آلمان', 'ایتالیا',
+          'اسپانیا', 'هلند', 'سوئد', 'نروژ', 'دانمارک', 'سوئیس', 'یونان', 'آذربایجان',
+          'گرجستان', 'ارمنستان', 'ازبکستان', 'قزاقستان', 'ترکمنستان', 'تاجیکستان',
+          'مالزی', 'اندونزی', 'فیلیپین', 'تایلند', 'ویتنام', 'سنگاپور', 'کره‌شمالی',
+          'منگولیا', 'بنگلادش', 'نپال', 'سریلانکا', 'میانمار', 'کامبوج', 'لائوس',
+          'استانبول','دبی','پاریس','لندن','نیویورک','توکیو','بانکوک','رم','بارسلونا','مسکو','قاهره','بغداد','کابل','دمشق','برلین','مادرید','سیدنی','تورنتو','لس‌آنجلس','شانگهای','ریاض','آنکارا','دهلی'
+        ],
+      },
+
+      /* ════ جاذبه گردشگری ════ */
+      {
+        id: 'tourist',
+        name: 'جاذبه گردشگری',
+        icon: '🗼',
+        words: [
+          'برج ایفل', 'دیوار چین', 'تاج‌محل', 'کولوسئوم', 'برج پیزا', 'اهرام مصر',
+          'ابوسیمبل', 'آکروپولیس', 'ساگرادا فامیلیا', 'برج آزادی تهران', 'ارگ بم',
+          'میدان نقش جهان', 'کاخ گلستان', 'پل خواجو', 'آرامگاه حافظ', 'آرامگاه سعدی',
+          'مسجد شیخ لطف‌الله', 'گنبد سلطانیه', 'چغازنبیل', 'تخت جمشید', 'پاسارگاد',
+          'آبشار شوشتر', 'دریاچه ارومیه', 'بند امیر', 'صومعه سنت استپانوس',
+          'جزیره کیش', 'جزیره قشم', 'باغ شاهزاده ماهان', 'منارجنبان', 'بازار تبریز',
+          'دریاچه گهر', 'بام ایران دماوند', 'آبشار آب سفید', 'غار علیصدر',
+          'دریای خزر', 'خلیج فارس', 'جنگل هیرکانی', 'دشت لوت', 'دشت کویر',
+          'مسجد جامع اصفهان', 'کاخ هشت‌بهشت', 'عالی قاپو', 'بازار وکیل شیراز',
+          'پارک ملی گلستان', 'تالاب انزلی', 'جزیره هرمز', 'کوه دماوند',
+          'برج میلاد', 'دریاچه چیچست', 'قلعه الموت', 'قلعه فلک‌الافلاک',
+          'گنبد کاووس', 'برج طغرل', 'آتشکده یزد', 'تپه‌های مریخی', 'ریگ جن',
+          'دره دارآباد', 'باغ ایرانی', 'کوه توچال', 'پارک جنگلی چیتگر',
+          'ارگ کریم‌خانی', 'بازار بزرگ تهران', 'کاخ مرمر', 'کاخ سعدآباد',
+          'آبشار لتمال', 'آبشار مارگون', 'باغ ارم شیراز', 'گردنه حیران',
+        ],
+      },
+
+      /* ════ عمومی ════ */
+      {
+        id: 'general',
+        name: 'عمومی',
+        icon: '🎲',
+        words: [
+          'خانه', 'مدرسه', 'بیمارستان', 'فروشگاه', 'پارک', 'کتابخانه', 'دانشگاه', 'مسجد',
+          'کلیسا', 'ورزشگاه', 'فرودگاه', 'ایستگاه قطار', 'بندر', 'بازار', 'هتل', 'رستوران',
+          'سینما', 'تئاتر', 'موزه', 'باغ‌وحش', 'آتش‌نشانی', 'پلیس', 'پست', 'بانک',
+          'داروخانه', 'نانوایی', 'قصابی', 'سوپرمارکت', 'پمپ بنزین', 'تعمیرگاه',
+          'آرایشگاه', 'لباس‌فروشی', 'کفش‌فروشی', 'عطاری', 'کافه', 'آبمیوه‌فروشی',
+          'بستنی‌فروشی', 'کبابی', 'پیتزافروشی', 'خشک‌شویی', 'کتاب‌فروشی',
+          'نقاشی', 'موسیقی', 'رقص', 'آشپزی', 'کوهنوردی', 'دوچرخه‌سواری', 'شنا',
+          'باغبانی', 'عکاسی', 'نجاری', 'آهنگری', 'برنامه‌نویسی', 'طراحی', 'خیاطی',
+          'آموزش', 'تدریس', 'پرورش اندام', 'ماهیگیری', 'شکار', 'سفر', 'گردشگری',
+          'تماشای فیلم', 'کتاب خواندن', 'بازی ویدیویی', 'شطرنج', 'بازی کارت',
+          'نقاشی دیجیتال', 'موزیک', 'گوش دادن به پادکست', 'مدیتیشن', 'یوگا',
+          'جودو', 'کاراته', 'تکواندو', 'بوکس', 'کشتی', 'گلف', 'تنیس', 'بدمینتون',
+          'والیبال', 'بسکتبال', 'فوتبال', 'هندبال', 'فوتسال', 'پینگ‌پنگ',
+        ],
+      },
+
+      /* ════ مکان‌های تاریخی ════ */
+      {
+        id: 'historical',
+        name: 'مکان‌های تاریخی',
+        icon: '🏛️',
+        words: [
+          'تخت جمشید', 'پاسارگاد', 'ارگ بم', 'میدان نقش جهان', 'چغازنبیل', 'گنبد سلطانیه',
+          'مسجد جامع اصفهان', 'کاخ گلستان', 'آرامگاه کوروش', 'آرامگاه داریوش',
+          'دروازه ملل', 'آپادانا', 'گنج‌نامه همدان', 'قلعه الموت', 'قلعه فلک‌الافلاک',
+          'آتشکده آذرگشسب', 'آتشکده یزد', 'میل رادکان', 'قلعه رودخان', 'ارگ کریم‌خانی',
+          'عالی قاپو', 'کاخ هشت‌بهشت', 'مسجد وکیل', 'بازار وکیل', 'پل سی‌وسه‌پل',
+          'پل خواجو', 'مسجد شیخ لطف‌الله', 'بیستون', 'منارجنبان', 'ربع رشیدی تبریز',
+          'گنبد کاووس', 'برج طغرل', 'دخمه زردشتیان', 'قلعه دختر', 'طاق بستان',
+          'هگمتانه', 'شوش', 'سیلک کاشان', 'تپه مارلیک', 'تپه زاغه', 'تپه‌های پیسا',
+          'دژ اشکانی', 'قلعه سمیران', 'قلعه بابک', 'آنتیوخوس', 'معبد ناهید', 'قلعه گبری',
+          'مسجد ولیعصر', 'مسجد امام اصفهان', 'چهلستون', 'کاخ چهل‌ستون', 'باغ فین',
+          'امامزاده صالح', 'شاه‌چراغ', 'مرقد امام رضا', 'حرم شاه‌عبدالعظیم',
+          'آستانه اشرفیه', 'امامزاده داود', 'قدم‌گاه نیشابور', 'بقعه شیخ صفی',
+          'گنبد سرخ مراغه', 'گنبد کبود مراغه', 'رباط شرف', 'رباط کریم',
+          'کاروانسرای شاه‌عباسی', 'پل شهرستان', 'پل چوبی اصفهان',
+        ],
+      },
+
+               {
+           id: 'kos',
+           name: 'کصشعر (فان) ',
+           icon: '🤣',
+           words: ["کیرم","کص","کون","جنده","گوه","کیرخر","مادرجنده","کصشعر","الاغ","خور گوه",'گشاد کون','کصت تو کیرم','جاکش','حرامزاده','شاش','گوز','کص‌مادر','قرمساق','اوسکل','کون‌لش',
+         "شاش قرمز", 'کامپیوتر ورزشکار', 'قاشق فضانورد', 'یخچال عاشق', 'گربه آهنی', 'خورشید یخی', 'چتر آتیشی', 'ماهی خلبان', 'موز مکانیک', 'پنیر خندان', 'تراکتور پرنده',
+          'مداد شناگر', 'کفش سخنگو', 'هویج فضایی', 'پتو دونده', 'لامپ گرسنه', 'نان دندان‌پزشک', 'کوسه گیاه‌خوار', 'پیاز خوشبو', 'ربات خوابالو', 'بستنی جوشکار', 'دریاچه جیبی', 'دوچرخه نامرئی', 'خرگوش پلیس', 'چکش شاعر', 'سیب زره‌پوش', 'تلویزیون شناگر', 'بالش فوتبالیست', 'کتاب ترسو', 'ابر چوبی', 'حلزون موشکی', 'ماشین گیاه‌خوار', 'پنگوئن کویری', 'فرش موتورسوار', 'کلاه زیردریایی', 'تخم‌مرغ آهنربایی', 'صندلی فضایی', 'جوراب رئیس', 'کیک دندان‌دار', 'جاروبرقی آوازخوان', 'موش دریایی', 'دندان طلایی', 'میکروفون خوابگرد', 'پشه بوکسور', 'کبوتر جاسوس', 'سوسیس کوهنورد', 'فیل جیبی', 'آجر بستنی', 'قوری موتوردار', 'شلوار دریانورد', 'تلفن موزی', 'پیتزای پرنده', 'چای یخی داغ', 'پنکه غواص', 'گاو موتورسوار',
+          'جنگل شیشه‌ای', 'بیسکویت آهنی', 'چاقوی پنبه‌ای', 'دستکش آبی نامرئی', 'عینک بی‌شیشه', 'قطار دریایی', 'قهوه شیرین شور', 'بادکنک سنگی', 'خرس شکلاتی',, 'کباب یخی', 'زرافه جیبی', 'قفل خوراکی', 'کلید شکسته‌نشکن', 'کمد نامرئی', 'بالن زیرزمینی', 'چراغ خاموش روشن', 'شیر آب‌نباتی', 'نهنگ دوچرخه‌سوار', 'ببر خجالتی', 'خمیر دندان تند', 'تخم‌مرغ مکعبی', 'فنجان غول‌پیکر', 'کاکتوس نرم', 'برف داغ', 'چمدان پرنده', 'یخچال بخاری', 'خروس شب‌کار', 'اسب حلزونی', 'گوجه فلزی', 'خیار چراغ‌قوه', 'آبشار سربالایی', 'سنگ ابری', 'پنجره چرمی',
+           ]
+         }
+
+    ];
+
+    /* ═══════════════════════════════════════════════════
+       کلمات فریب برای جاسوس (وقتی blankSpy روشن است)
+       برای اضافه کردن: فقط کلمه را داخل آرایه بنویسید
+    ═══════════════════════════════════════════════════ */
+    const BLUFF_WORDS = [
+      'لوستر', 'کشتی بادبانی', 'دوربین', 'ریسمان', 'موشک', 'آینه', 'چرخ خیاطی',
+      'ساعت شنی', 'پروانه', 'کهکشان', 'آتشفشان', 'رعد و برق', 'قطار بخار',
+      'کوه دماوند', 'ستاره دریایی', 'فانوس', 'جغد', 'طلا', 'آهن‌ربا', 'تلسکوپ',
+      'میکروسکوپ', 'قطب‌نما', 'سکسیون', 'ارگ', 'گرامافون', 'نقشه گنج',
+      'عصا جادویی', 'قالیچه پرنده', 'چراغ جادو',
+    ];
+
+    /* ═══════════════════════════════════════════════════
+       STATE
+    ═══════════════════════════════════════════════════ */
+    const S = {
+      players: [],
+      saved: [],
+      assigned: [],
+      revealed: [],
+      /* selectedCategories: آرایه‌ای از id های انتخاب‌شده — چند انتخابی */
+      selectedCategories: ['food'],
+      currentWord: '',
+      currentCategoryName: '',
+      customCategories: [],
+      tempCustomWords: [],
+      settings: {
+        sound: true,
+        bgMusic: false,
+        spyCount: 1,
+        revealTime: 10,
+        blankSpy: false,
+        showCategory: true,
+        theme: 'dark',
+      },
+      prevScreen: 's-home',
+      revealIdx: null,
+      revealIv: null,
+      holdActive: false,
+    };
+
+    /* ═══════════════════════════════════════════════════
+       رندوم واقعی — از crypto استفاده می‌کند
+    ═══════════════════════════════════════════════════ */
+    function cryptoRandom() {
+      const arr = new Uint32Array(1);
+      crypto.getRandomValues(arr);
+      return arr[0] / (0xFFFFFFFF + 1);
+    }
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(cryptoRandom() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+    function pickRandom(arr) {
+      return arr[Math.floor(cryptoRandom() * arr.length)];
+    }
+
+    /* ═══ AUDIO ═══ */
+    let actx = null;
+    function getAC() {
+      if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+      return actx;
+    }
+    function beep(f = 440, d = .1, t = 'sine', v = .16) {
+      if (!S.settings.sound) return;
+      try {
+        const ac = getAC(), o = ac.createOscillator(), g = ac.createGain();
+        o.connect(g); g.connect(ac.destination);
+        o.frequency.value = f; o.type = t;
+        g.gain.setValueAtTime(0, ac.currentTime);
+        g.gain.linearRampToValueAtTime(v, ac.currentTime + .016);
+        g.gain.exponentialRampToValueAtTime(.0001, ac.currentTime + d);
+        o.start(); o.stop(ac.currentTime + d);
+      } catch (e) { }
+    }
+    function sndClick() { beep(520, .08, 'sine', .13); }
+    function sndSelect() { beep(480, .12, 'sine', .15); }
+    function sndReveal() {
+      if (!S.settings.sound) return;
+      try {
+        const ac = getAC(), t = ac.currentTime;
+        [260, 390, 520, 780].forEach((f, i) => {
+          const o = ac.createOscillator(), g = ac.createGain();
+          o.connect(g); g.connect(ac.destination);
+          o.frequency.value = f; o.type = 'sine';
+          g.gain.setValueAtTime(0, t + i * .08);
+          g.gain.linearRampToValueAtTime(.15, t + i * .08 + .05);
+          g.gain.exponentialRampToValueAtTime(.001, t + i * .08 + .28);
+          o.start(t + i * .08); o.stop(t + i * .08 + .3);
+        });
+      } catch (e) { }
+    }
+    function sndWin() {
+      if (!S.settings.sound) return;
+      try {
+        const ac = getAC(), t = ac.currentTime;
+        [523, 659, 784, 1047].forEach((f, i) => {
+          const o = ac.createOscillator(), g = ac.createGain();
+          o.connect(g); g.connect(ac.destination);
+          o.frequency.value = f;
+          g.gain.setValueAtTime(.13, t + i * .15);
+          g.gain.exponentialRampToValueAtTime(.001, t + i * .15 + .4);
+          o.start(t + i * .15); o.stop(t + i * .15 + .4);
+        });
+      } catch (e) { }
+    }
+
+    /* ═══ BG MUSIC ═══ */
+    function toggleBgMusic() {
+      sndClick(); S.settings.bgMusic = !S.settings.bgMusic;
+      setSw('sw-bgmusic', S.settings.bgMusic);
+      applyBgMusic();
+    }
+    function applyBgMusic() {
+      const m = document.getElementById('bgMusic');
+      if (S.settings.bgMusic) { m.volume = 0.13; m.play().catch(() => { }); }
+      else m.pause();
+    }
+
+    /* ═══ TOAST ═══ */
+    function toast(msg, d = 2000) {
+      const el = document.getElementById('toast');
+      el.textContent = msg; el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), d);
+    }
+
+    /* ═══ THEME ═══ */
+    function applyTheme() {
+      const isDark = S.settings.theme === 'dark';
+      document.documentElement.setAttribute('data-theme', S.settings.theme);
+      setSw('sw-theme', !isDark);
+      const ti = document.getElementById('themeMenuIcon'); if (ti) ti.textContent = isDark ? '☀️' : '🌙';
+      const tl = document.getElementById('themeMenuLabel'); if (tl) tl.textContent = isDark ? 'حالت روشن' : 'حالت تاریک';
+      const ts = document.getElementById('themeSubLabel'); if (ts) ts.textContent = isDark ? 'در حال حاضر: تاریک' : 'در حال حاضر: روشن';
+    }
+    function toggleTheme() { sndClick(); S.settings.theme = S.settings.theme === 'dark' ? 'light' : 'dark'; applyTheme(); }
+
+    /* ═══ SCREENS ═══ */
+    function goScreen(id) {
+      sndClick();
+      S.prevScreen = document.querySelector('.screen.active')?.id || 's-home';
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo(0, 0);
+      if (id === 's-settings') renderSettings();
+      if (id === 's-wordpicker') renderCatGrid();
+    }
+    function goBack() { sndClick(); goScreen(S.prevScreen); }
+
+    /* ═══ MENU ═══ */
+    function openMenu() { sndClick(); document.getElementById('menuDrawer').classList.add('vis'); document.getElementById('menuOverlay').classList.add('vis'); }
+    function closeMenu() { document.getElementById('menuDrawer').classList.remove('vis'); document.getElementById('menuOverlay').classList.remove('vis'); }
+
+    /* ═══ PLAYERS ═══ */
+    function addPlayer() {
+      sndSelect();
+      const inp = document.getElementById('pInput');
+      const name = inp.value.trim();
+      if (!name) { toast('نام بازیکن را وارد کنید'); return; }
+      if (S.players.includes(name)) { toast('این نام قبلاً اضافه شده'); return; }
+      if (S.players.length >= 20) { toast('حداکثر ۲۰ بازیکن'); return; }
+      S.players.push(name); inp.value = '';
+      persistPlayers(); renderChips();
+    }
+    function removePlayer(i) { sndClick(); S.players.splice(i, 1); persistPlayers(); renderChips(); }
+    function renderChips() {
+      const c = document.getElementById('playerChips');
+      const cnt = document.getElementById('pCount');
+      if (!S.players.length) { c.innerHTML = '<span class="p-empty">هنوز کسی اضافه نشده 👥</span>'; cnt.textContent = ''; return; }
+      c.innerHTML = S.players.map((n, i) => `<div class="p-chip">${n}<span class="chip-del" onclick="removePlayer(${i})">✕</span></div>`).join('');
+      cnt.textContent = `بازیکنان ${S.players.length}`;
+    }
+    function persistPlayers() { try { localStorage.setItem('wiPlayers', JSON.stringify(S.players)); } catch (e) { } }
+    function loadPlayers() { try { const d = localStorage.getItem('wiPlayers'); if (d) S.players = JSON.parse(d); } catch (e) { } }
+
+    /* ═══ MY LIST ═══ */
+    let mylistOpen = false;
+    function toggleMyList() {
+      sndClick(); mylistOpen = !mylistOpen;
+      document.getElementById('mylistBody').classList.toggle('open', mylistOpen);
+      document.getElementById('mylistArrow').classList.toggle('open', mylistOpen);
+      if (mylistOpen) renderSaved();
+    }
+    function savePerson() {
+      sndSelect();
+      const inp = document.getElementById('savedInput'); const name = inp.value.trim();
+      if (!name) { toast('نام را وارد کنید'); return; }
+      if (S.saved.includes(name)) { toast('قبلاً ذخیره شده'); return; }
+      S.saved.push(name); inp.value = ''; persistSaved(); renderSaved(); toast('✅ ذخیره شد');
+    }
+    function renderSaved() {
+      const c = document.getElementById('savedList');
+      if (!S.saved.length) { c.innerHTML = '<div style="padding:9px 13px;font-size:.76rem;color:var(--txt3);">لیست خالی است</div>'; return; }
+      c.innerHTML = S.saved.map((n, i) => `
+    <div class="saved-row" id="sr_${i}" onclick="toggleSaved(${i})">
+      <div class="s-check" id="sc_${i}"></div>
+      <div class="saved-row-name">${n}</div>
+      <button class="saved-del" onclick="event.stopPropagation();deleteSaved(${i})">🗑</button>
+    </div>`).join('');
+    }
+    const savedSel = new Set();
+    function toggleSaved(i) {
+      sndClick();
+      if (savedSel.has(i)) savedSel.delete(i); else savedSel.add(i);
+      document.getElementById('sr_' + i).classList.toggle('sel', savedSel.has(i));
+      document.getElementById('sc_' + i).textContent = savedSel.has(i) ? '✓' : '';
+    }
+    function selectAllSaved() { sndClick(); S.saved.forEach((_, i) => { if (!savedSel.has(i)) toggleSaved(i); }); }
+    function deselectAllSaved() { sndClick();[...savedSel].forEach(i => toggleSaved(i)); }
+    function addFromSaved() {
+      sndSelect(); let added = 0;
+      savedSel.forEach(i => { const n = S.saved[i]; if (n && !S.players.includes(n) && S.players.length < 20) { S.players.push(n); added++; } });
+      if (!added) { toast('هیچ‌کدام انتخاب نشده'); return; }
+      persistPlayers(); renderChips(); toast(`✅ ${added} نفر اضافه شدند`);
+    }
+    function deleteSaved(i) { sndClick(); savedSel.delete(i); S.saved.splice(i, 1); persistSaved(); renderSaved(); }
+    function persistSaved() { try { localStorage.setItem('wiSaved', JSON.stringify(S.saved)); } catch (e) { } }
+    function loadSaved() { try { const d = localStorage.getItem('wiSaved'); if (d) S.saved = JSON.parse(d); } catch (e) { } }
+
+    /* ═══ CATEGORY PICKER — چند انتخابی ═══ */
+    function getAllCategories() {
+      const base = WORD_CATEGORIES.map(c => ({ ...c, words: [...c.words] }));
+      S.customCategories.forEach(cc => {
+        if (cc.words.length) base.push({ id: 'custom_' + cc.name, name: cc.name, icon: '📝', words: cc.words, custom: true });
+      });
+      return base;
+    }
+
+    function renderCatGrid() {
+      const cats = getAllCategories();
+      /* نمایش لیست‌های انتخاب‌شده */
+      const selNames = S.selectedCategories
+        .map(id => cats.find(c => c.id === id)?.name)
+        .filter(Boolean);
+      const bar = document.getElementById('catSelectedBar');
+      if (selNames.length === 0) {
+        bar.textContent = 'هیچ لیستی انتخاب نشده';
+        bar.style.borderColor = 'rgba(255,71,87,.3)';
+        bar.style.color = 'var(--spy)';
+      } else {
+        bar.textContent = `✓ انتخاب شده: ${selNames.join(' + ')}`;
+        bar.style.borderColor = 'rgba(108,99,255,.3)';
+        bar.style.color = 'var(--accent2)';
+      }
+
+      document.getElementById('catGrid').innerHTML = cats.map(cat => {
+        const sel = S.selectedCategories.includes(cat.id);
+        return `
+      <div class="cat-card ${sel ? 'sel' : ''}" onclick="toggleCategory('${cat.id}')">
+        <div class="cat-check">${sel ? '✓' : ''}</div>
+        <span class="cat-icon">${cat.icon}</span>
+        <div class="cat-name">${cat.name}</div>
+        <div class="cat-count">${cat.words.length} کلمه</div>
+      </div>`;
+      }).join('');
+    }
+
+    function toggleCategory(id) {
+      sndSelect();
+      const idx = S.selectedCategories.indexOf(id);
+      if (idx > -1) {
+        /* اگه فقط یکی مونده نمیشه حذف کرد */
+        if (S.selectedCategories.length === 1) { toast('حداقل یک لیست باید انتخاب باشد'); return; }
+        S.selectedCategories.splice(idx, 1);
+      } else {
+        S.selectedCategories.push(id);
+      }
+      renderCatGrid();
+      try { localStorage.setItem('wiSelectedCats', JSON.stringify(S.selectedCategories)); } catch (e) { }
+    }
+
+    /* ═══ PICK WORD از لیست‌های انتخابی ═══ */
+    function pickWord() {
+      const cats = getAllCategories();
+      /* فیلتر فقط لیست‌های انتخاب‌شده */
+      const activeCats = cats.filter(c => S.selectedCategories.includes(c.id));
+      if (!activeCats.length) return { word: '???', catName: '' };
+
+      /* انتخاب رندوم یک کتگوری از میان انتخابی‌ها */
+      const cat = pickRandom(activeCats);
+      /* انتخاب رندوم یک کلمه */
+      const word = pickRandom(cat.words);
+      return { word, catName: cat.name };
+    }
+
+    /* ═══ START GAME ═══ */
+    function startGame() {
+      sndSelect();
+      if (S.players.length < 3) { toast('حداقل ۳ بازیکن نیاز است'); return; }
+      if (S.selectedCategories.length === 0) { toast('یک لیست انتخاب کنید'); return; }
+      doStartGame();
+    }
+
+    function doStartGame() {
+      const maxSpy = Math.floor(S.players.length / 2);
+      const spyCount = Math.min(S.settings.spyCount, maxSpy);
+
+      const { word, catName } = pickWord();
+      S.currentWord = word;
+      S.currentCategoryName = catName;
+
+      /* shuffle واقعی با crypto */
+      const sp = shuffle([...S.players]);
+      /* اختصاص جاسوس به اولین spyCount نفر، سپس shuffle دوباره */
+      S.assigned = shuffle(sp.map((name, i) => ({ name, isSpy: i < spyCount })));
+      S.revealed = new Array(S.players.length).fill(false);
+
+      renderGame();
+      /* تغییر مستقیم صفحه بدون goScreen برای جلوگیری از sndClick اضافی */
+      S.prevScreen = 's-home';
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('s-game').classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function restartSameGame() {
+      sndSelect();
+      if (!S.players.length) { toast('بازیکنان وجود ندارند'); return; }
+      doStartGame();
+      toast('🔄 جاسوس جدید و کلمه جدید انتخاب شد!');
+    }
+
+    /* ═══ GAME RENDER ═══ */
+    function renderGame() {
+      const list = document.getElementById('gameList');
+      list.innerHTML = '';
+      S.assigned.forEach((_, i) => list.appendChild(buildPlayerCard(i)));
+      document.getElementById('godBtnWrap').style.display = 'none';
+    }
+    function buildPlayerCard(i) {
+      const p = S.assigned[i]; const done = S.revealed[i];
+      const wrap = document.createElement('div');
+      wrap.className = 'pli' + (done ? ' done' : ''); wrap.id = 'pli_' + i;
+      wrap.innerHTML = `
+    <div class="pli-main">
+      <div class="pli-num">${i + 1}</div>
+      <div class="pli-name">${p.name}</div>
+      <div class="pli-status">${done ? '✓ دیده شد' : ''}</div>
+      <button class="pli-reveal-btn" onclick="revealWord(${i})" ${done ? 'disabled' : ''}>
+        ${done ? '✓ دیده شد' : '👁 کلمه'}
+      </button>
+    </div>`;
+      return wrap;
+    }
+    function refreshCard(i) { const old = document.getElementById('pli_' + i); if (old) old.replaceWith(buildPlayerCard(i)); }
+    function checkGodBtn() { if (S.revealed.every(Boolean)) document.getElementById('godBtnWrap').style.display = 'block'; }
+
+    /* ═══ WORD REVEAL — HOLD TO SEE ═══ */
+    function revealWord(i) {
+      if (S.revealed[i]) return;
+      sndClick();
+      S.revealIdx = i; S.holdActive = false;
+      const p = S.assigned[i];
+
+      /* reset */
+      document.getElementById('wcPrompt').style.display = '';
+      document.getElementById('wcWord').className = 'word-card-word';
+      document.getElementById('wcCountdown').textContent = '';
+      const bar = document.getElementById('wcTimerBar');
+      bar.style.transition = 'none'; bar.style.width = '100%';
+      document.getElementById('wcPlayer').textContent = p.name;
+      document.getElementById('wordOverlay').classList.add('vis');
+
+      const card = document.getElementById('wordCardEl');
+      /* پاکسازی handler های قبلی */
+      card.onmousedown = null; card.onmouseup = null; card.onmouseleave = null;
+      card.ontouchstart = null; card.ontouchend = null; card.ontouchcancel = null;
+
+      function showContent() {
+        if (S.holdActive) return;
+        S.holdActive = true;
+        sndReveal();
+        document.getElementById('wcPrompt').style.display = 'none';
+        document.getElementById('wcWord').classList.add('shown');
+        const isSpy = S.assigned[i].isSpy;
+        const badge = document.getElementById('wcRoleBadge');
+        const wordText = document.getElementById('wcWordText');
+        const desc = document.getElementById('wcDesc');
+
+        if (isSpy) {
+          badge.textContent = '🕵️ تو جاسوسی!';
+          badge.className = 'wc-role-badge wc-role-spy';
+          if (S.settings.blankSpy) {
+            wordText.textContent = pickRandom(BLUFF_WORDS);
+            wordText.className = 'wc-word-text wc-word-spy';
+            desc.textContent = 'این کلمه واقعی نیست! تو جاسوسی — از صحبت دیگران کلمه اصلی را پیدا کن.';
+          } else {
+            wordText.textContent = 'جاسوس 🕵️';
+            wordText.className = 'wc-word-text wc-word-spy';
+            desc.textContent = 'تو جاسوسی! کلمه اصلی را نمی‌دانی. از صحبت دیگران حدس بزن.';
+          }
+          bar.style.background = 'var(--spy)';
+        } else {
+          badge.textContent = '✅ کلمه تو';
+          badge.className = 'wc-role-badge wc-role-word';
+          const catLabel = S.settings.showCategory && S.currentCategoryName ? ` (${S.currentCategoryName})` : '';
+          wordText.textContent = S.currentWord;
+          wordText.className = 'wc-word-text wc-word-normal';
+          desc.textContent = `کلمه مشترک همه شهروندان است${catLabel}. مستقیم نگو!`;
+          bar.style.background = 'var(--word)';
+        }
+
+        const dur = S.settings.revealTime;
+        bar.style.transition = 'none'; bar.style.width = '100%';
+        const cntEl = document.getElementById('wcCountdown');
+        cntEl.textContent = `${dur} ثانیه`;
+        requestAnimationFrame(() => { bar.style.transition = `width ${dur}s linear`; bar.style.width = '0%'; });
+        if (S.revealIv) clearInterval(S.revealIv);
+        let rem = dur;
+        S.revealIv = setInterval(() => {
+          rem--;
+          cntEl.textContent = rem > 0 ? `${rem} ثانیه` : '';
+          if (rem <= 0) { clearInterval(S.revealIv); S.revealIv = null; }
+        }, 1000);
+      }
+
+      function hideContent() {
+        if (!S.holdActive) return;
+        S.holdActive = false;
+        document.getElementById('wcWord').className = 'word-card-word';
+        document.getElementById('wcPrompt').style.display = '';
+        document.getElementById('wcCountdown').textContent = '';
+        bar.style.transition = 'none'; bar.style.width = '100%';
+        if (S.revealIv) { clearInterval(S.revealIv); S.revealIv = null; }
+        if (!S.revealed[i]) { S.revealed[i] = true; refreshCard(i); checkGodBtn(); }
+      }
+
+      card.onmousedown = e => { e.preventDefault(); showContent(); };
+      card.onmouseup = () => hideContent();
+      card.onmouseleave = () => hideContent();
+      card.ontouchstart = e => { e.preventDefault(); showContent(); };
+      card.ontouchend = () => hideContent();
+      card.ontouchcancel = () => hideContent();
+
+      /* بستن با کلیک روی پس‌زمینه */
+      document.getElementById('wordOverlay').onclick = e => {
+        if (e.target === document.getElementById('wordOverlay')) closeWordCard();
+      };
+    }
+
+    function closeWordCard() {
+      if (S.revealIv) { clearInterval(S.revealIv); S.revealIv = null; }
+      document.getElementById('wordOverlay').classList.remove('vis');
+      const card = document.getElementById('wordCardEl');
+      card.onmousedown = card.onmouseup = card.onmouseleave = null;
+      card.ontouchstart = card.ontouchend = card.ontouchcancel = null;
+      S.holdActive = false;
+      const i = S.revealIdx;
+      if (i !== null && i !== undefined && !S.revealed[i]) { S.revealed[i] = true; refreshCard(i); checkGodBtn(); }
+      S.revealIdx = null;
+    }
+
+    /* ═══ GOD VIEW ═══ */
+    function showGodView() {
+      sndReveal();
+      document.getElementById('godGrid').innerHTML = S.assigned.map((p, i) => `
+    <div class="god-cell" style="border-color:${p.isSpy ? 'rgba(255,71,87,.38)' : 'rgba(0,210,160,.28)'};">
+      <div class="god-cell-emoji">${p.isSpy ? '🕵️' : '👤'}</div>
+      <div class="god-cell-player">${p.name}</div>
+      <div class="god-cell-role" style="color:${p.isSpy ? 'var(--spy)' : 'var(--word)'}">${p.isSpy ? 'جاسوس' : 'شهروند'}</div>
+      <div class="god-cell-word">${p.isSpy ? '—' : S.currentWord}</div>
+    </div>`).join('');
+      document.getElementById('godOverlay').classList.add('vis');
+    }
+    function hideGodView() { sndClick(); document.getElementById('godOverlay').classList.remove('vis'); }
+
+    /* ═══ WINNER ═══ */
+    function showWinnerPopup(winner) {
+      sndWin();
+      const spies = S.assigned.filter(p => p.isSpy).map(p => p.name).join('، ') || '?';
+      if (winner === 'citizen') {
+        document.getElementById('winIcon').textContent = '🏙️';
+        document.getElementById('winTitle').textContent = 'شهروندان بردند!';
+        document.getElementById('winTitle').style.color = 'var(--word)';
+        document.getElementById('winSub').textContent = `جاسوس شناخته شد!\n${spies}\nکلمه: ${S.currentWord}`;
+      } else {
+        document.getElementById('winIcon').textContent = '🕵️';
+        document.getElementById('winTitle').textContent = 'جاسوس برنده شد!';
+        document.getElementById('winTitle').style.color = 'var(--spy)';
+        document.getElementById('winSub').textContent = `${spies} جاسوس بود!\nکلمه: ${S.currentWord}`;
+      }
+      document.getElementById('winnerPopup').classList.add('vis');
+    }
+    function closeWinner() { sndClick(); document.getElementById('winnerPopup').classList.remove('vis'); }
+    function newGame() { sndClick(); closeWinner(); goScreen('s-home'); }
+
+    /* ═══ CONFIRM ═══ */
+    function confirmRestart() { sndClick(); document.getElementById('confirmModal').classList.add('vis'); }
+    function closeConfirm() { sndClick(); document.getElementById('confirmModal').classList.remove('vis'); }
+    function doRestart() { sndClick(); closeConfirm(); goScreen('s-home'); }
+
+    /* ═══ SETTINGS ═══ */
+    function renderSettings() {
+      setSw('sw-sound', S.settings.sound);
+      setSw('sw-bgmusic', S.settings.bgMusic);
+      setSw('sw-blankspy', S.settings.blankSpy);
+      setSw('sw-showcategory', S.settings.showCategory);
+      applyTheme();
+      document.getElementById('nv-spyCount').textContent = S.settings.spyCount;
+      document.getElementById('nv-revealTime').textContent = S.settings.revealTime;
+      renderCustomWordsDisplay(); renderSavedCats();
+    }
+    function setSw(id, on) { const el = document.getElementById(id); if (el) { if (on) el.classList.add('on'); else el.classList.remove('on'); } }
+    function toggleSw(id, key) { sndClick(); S.settings[key] = !S.settings[key]; setSw(id, S.settings[key]); }
+    function changeN(key, d) {
+      sndClick();
+      const limits = { spyCount: [1, 10], revealTime: [3, 30] };
+      const [mn, mx] = limits[key] || [1, 99];
+      S.settings[key] = Math.max(mn, Math.min(mx, S.settings[key] + d));
+      document.getElementById('nv-' + key).textContent = S.settings[key];
+    }
+    function saveSettings() {
+      sndSelect();
+      try { localStorage.setItem('wiSettings', JSON.stringify({ settings: S.settings })); } catch (e) { }
+      try { localStorage.setItem('wiCustomCats', JSON.stringify(S.customCategories)); } catch (e) { }
+      applyTheme(); applyBgMusic();
+      toast('✅ تنظیمات ذخیره شد'); goBack();
+    }
+    function loadSettings() {
+      try { const d = localStorage.getItem('wiSettings'); if (d) { const p = JSON.parse(d); if (p.settings) Object.assign(S.settings, p.settings); } } catch (e) { }
+      try { const d = localStorage.getItem('wiCustomCats'); if (d) S.customCategories = JSON.parse(d); } catch (e) { }
+      try { const d = localStorage.getItem('wiSelectedCats'); if (d) S.selectedCategories = JSON.parse(d); } catch (e) { }
+    }
+
+    /* ═══ CUSTOM WORDS ═══ */
+    function addCustomWord() {
+      sndClick();
+      const inp = document.getElementById('customWordInput'); const w = inp.value.trim();
+      if (!w) { toast('کلمه را وارد کنید'); return; }
+      if (S.tempCustomWords.includes(w)) { toast('قبلاً اضافه شده'); return; }
+      S.tempCustomWords.push(w); inp.value = ''; renderCustomWordsDisplay();
+    }
+    function renderCustomWordsDisplay() {
+      const el = document.getElementById('customWordsDisplay');
+      if (!S.tempCustomWords.length) { el.innerHTML = '<span style="font-size:.72rem;color:var(--txt3);padding:3px 2px;">هنوز کلمه‌ای اضافه نشده</span>'; return; }
+      el.innerHTML = S.tempCustomWords.map((w, i) => `<span class="custom-word-pill">${w}<span class="del-word" onclick="removeCustomWord(${i})">✕</span></span>`).join('');
+    }
+    function removeCustomWord(i) { sndClick(); S.tempCustomWords.splice(i, 1); renderCustomWordsDisplay(); }
+    function clearCustomWords() { sndClick(); S.tempCustomWords = []; renderCustomWordsDisplay(); }
+    function saveCustomCategory() {
+      sndSelect();
+      const name = document.getElementById('customCatName').value.trim() || `لیست ${S.customCategories.length + 1}`;
+      if (!S.tempCustomWords.length) { toast('ابتدا کلمه اضافه کنید'); return; }
+      const existing = S.customCategories.findIndex(c => c.name === name);
+      if (existing > -1) S.customCategories[existing].words = [...S.tempCustomWords];
+      else S.customCategories.push({ name, words: [...S.tempCustomWords] });
+      try { localStorage.setItem('wiCustomCats', JSON.stringify(S.customCategories)); } catch (e) { }
+      S.tempCustomWords = [];
+      document.getElementById('customCatName').value = '';
+      renderCustomWordsDisplay(); renderSavedCats();
+      toast(`✅ لیست "${name}" ذخیره شد`);
+    }
+    function renderSavedCats() {
+      const el = document.getElementById('savedCatsList');
+      if (!S.customCategories.length) { el.innerHTML = ''; return; }
+      el.innerHTML = '<div class="stg-section-title" style="padding-top:0;">لیست‌های ذخیره‌شده</div>' +
+        S.customCategories.map((cc, i) => `
+      <div class="stg-row" style="margin-bottom:5px;">
+        <span style="font-size:.83rem;font-weight:700;flex:1;">📝 ${cc.name}</span>
+        <span style="font-size:.7rem;color:var(--txt3);margin-left:7px;">${cc.words.length} کلمه</span>
+        <button class="btn btn-ghost-glass btn-xs" style="margin-right:5px;" onclick="loadCustomCat(${i})">ویرایش</button>
+        <button class="saved-del" onclick="deleteCustomCat(${i})">🗑</button>
+      </div>`).join('');
+    }
+    function loadCustomCat(i) { sndClick(); S.tempCustomWords = [...S.customCategories[i].words]; document.getElementById('customCatName').value = S.customCategories[i].name; renderCustomWordsDisplay(); }
+    function deleteCustomCat(i) { sndClick(); S.customCategories.splice(i, 1); try { localStorage.setItem('wiCustomCats', JSON.stringify(S.customCategories)); } catch (e) { } renderSavedCats(); toast('لیست حذف شد'); }
+
+    /* ═══ INIT ═══ */
+    function init() {
+      loadSaved(); loadSettings(); loadPlayers();
+      applyTheme(); applyBgMusic(); renderChips();
+    }
+    init();
+  </script>
+</body>
+
+</html>
